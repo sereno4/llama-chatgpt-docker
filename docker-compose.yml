@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  llama-chat:
+    build: .
+    container_name: llama-chat
+    ports:
+      - "8001:8001"
+      - "8002:8002"
+    volumes:
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
+    environment:
+      - MODEL_PATH=/app/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
+      - N_THREADS=4
+      - N_CTX=2048
+      - MAX_TOKENS=512
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+networks:
+  chat-network:
+    driver: bridge

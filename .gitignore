@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Models (muito grandes!)
+models/*.gguf
+models/*.bin
+models/safe_tensors
+
+# IDE
+.idea/
+.vscode/
